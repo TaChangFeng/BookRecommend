@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书推荐系统</title>
+    <link rel="stylesheet" href="../static/pic.css">
+    <link rel="stylesheet" href="../static/a2.css" />
+    <style>
+        .left-section {
+            float: left;
+        }
+
+        .right-section {
+            float: left;
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .right-section img {
+            width: calc(33.33% - 10px);
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+        }
+        .book-card {
+            border: 2px solid transparent; /* 初始边框样式 */
+            transition: border-color 0.3s ease-in-out; /* 过渡效果 */
+            width:300px;
+            height:300px;
+        }
+
+        .book-card:hover {
+            border-color: #30b44b; /* 鼠标悬停时边框颜色 */
+        }
+    </style>
+</head>
+
+<body background="../static/bg3.jpg"
+    style="background-size: 100% 100%;background-repeat: no-repeat;background-attachment: fixed;">
+    <div class="B1">
+        <div class="B4">
+            <a rel="nofollow" href="https://tianchi.aliyun.com/dataset/31828?spm=a2c22.12282016.0.0.3d6529feqm24qG"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 30px;">阿里云数据集</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;">|</span>
+            <a rel="nofollow" href="https://www.baidu.com/"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">百度官网</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;">|</span>
+            <a rel="nofollow" href="https://www.csdn.net/"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">CSDN官网</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;">|</span>
+            <a rel="nofollow" href="https://www.runoob.com/"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">菜鸟教程</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;">|</span>
+            <a rel="nofollow" href="https://www.bookcrossing.com/"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">BookCrossing</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;">|</span>
+            <a rel="nofollow" href="https://github.com/TaChangFeng"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">GitHub</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;">|</span>
+            <a rel="nofollow" href="{% url 'about' %}"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">网站说明</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;">|</span>
+            <a rel="nofollow" href="download.html"
+                style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">文件下载</a>
+                {% if user.is_authenticated %}
+                <a rel="nofollow" href="#" style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 50px;">[已登录用户]{{ user.username }}</a>
+                <a href="{% url 'logout' %}"  style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 30px;">退出账号</a>
+                {% else %}
+                <a rel="nofollow" href="{% url 'loginview' %}" style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 30px;">用户登录</a>
+                {% endif %}
+        </div>
+    </div>
+    <div class="A2 A3">
+        <img src="../static/logo.png" style="height:60px;width:180px;margin-left:30px;margin-top:5px">
+    </div>
+    <div class="B6">
+        <a class="D1" href="{% url 'mainpage' %}"
+            style="margin-left:170px;background-color: #30b44b;color: #fff;border-radius: 5px;">网站首页</a>
+        <a class="D1" href="{% url 'library' %}">图书馆</a>
+        {% if user.is_authenticated %}
+        <a class="D1" href="{% url 'history' %}">我的足迹</a>
+        {% else %}
+        <a class="D1" href="{% url 'loginview' %}" onclick="showLoginPrompt()">我的足迹</a>
+        <script>
+            function showLoginPrompt() {
+                alert("请登录后使用本功能！");
+            }
+        </script>
+        {% endif %}
+        <a class="D1" href="{% url 'about' %}">网站说明</a>
+        <a class="D1" href="#">下载专区</a>
+        <a class="D1" href="{% url 'admin:index' %}" >后台管理</a>
+        <div class="time"></div>
+        <script src="../static/time.js"></script>
+    </div>
+    <div class="left-section demo" style="float: left; position: relative;height: 400px;">
+        <h2 style="text-align: center;">————————图书展播————————</h2>
+        <div class="demo1" style="text-align: center;">
+            <img src="../static/pic1.jpeg" alt="" />
+            <img src="../static/pic2.jpeg" alt="" />
+            <img src="../static/pic3.jpeg" alt="" />
+            <img src="../static/pic4.jpeg" alt="" />
+            <img src="../static/pic5.jpeg" alt="" />
+        </div>
+    </div>
+    <div style="margin-top: 8%;text-align: center;">
+        <h2 style="display: inline-block; margin: 0 auto; text-align: center;">————————高分书籍————————</h2>
+        <!-- 右侧区域 -->
+        <div class="right-section"
+            style="width: 50%; float: left; position: absolute; top: 0; right: 0; margin-top: 10%; margin-right: 50px;">
+            {% for book in top_books %}
+                <div class="book-card"
+                    style="width: calc(100% / 3); box-sizing: border-box; padding: 10px; margin-top: 10px; float: left;">
+                    <a href="{% url 'record_and_show_book' bid=book.bid isbn=book.ISBN %}" style="text-decoration: none; color: black;">
+                        <img src="{% with book.Image_URL_S as book_url %}{{ book_url }}{% endwith %}"
+                            alt="{{ book.Book_Title }}" style="border-radius: 0; display: block; margin: 0 auto;">
+                        <h4 style="text-align: center; margin-top: 10px;">{{ book.Book_Title }}</h4>
+                        <p style="text-align: center; margin-top: 10px;">作者: {{ book.Book_Author }}</p>
+                        <p style="text-align: center; margin-top: 5px;">综合评分: {{ book.avg_rating|floatformat:"1" }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div style="margin-top: 350px;margin-left: 50px;background-color: rgb(255, 255, 255);width:600px;height: 200px;border: 2px solid #ccc;border-radius: 10px;">
+        <h2 style="text-align: center;">————————图书新闻————————</h2>
+        <ul>  
+            <li style="margin-top:10px;color: rgb(127, 240, 232);"><a href="https://tianchi.aliyun.com/dataset/31828?spm=a2c22.12282016.0.0.3d6529feqm24qG" style="text-decoration: none;color:rgb(0, 0, 0);">BookCrossing数据集来源-阿里云数据集</a></li> 
+            <li style="margin-top:10px;color: rgb(127, 240, 232);"><a href="https://www.baidu.com/" style="text-decoration: none;color:rgb(0, 0, 0);">轮播图片来源-百度</a></li> 
+            <li style="margin-top:10px;color: rgb(127, 240, 232);"><a href="#" style="text-decoration: none;color:rgb(0, 0, 0);">其他链接其他链接其他链接</a></li> 
+            <li style="margin-top:10px;color: rgb(127, 240, 232);"><a href="#" style="text-decoration: none;color:rgb(0, 0, 0);">其他链接其他链接其他链接</a></li> 
+        </ul>
+    </div>
+    
+    
+    
+</body>
+
+</html>

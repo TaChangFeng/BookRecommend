@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+    .content3{
+        width: 85vw;
+        height: 90vh;
+        background: url("../static/bg2.png") no-repeat;
+        background-size: 90% 100%;
+        position: absolute;
+        right: 15%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 20px;
+        background-color: #fff;
+    }
+    /* styles.css */
+    .empty-field {
+        border: 1px solid red !important; /* 使用 !important 提高优先级 */
+        }
+    </style>
+</head>
+
+<body background="../static/bg1.jpeg" style="background-size: 100% 100%;background-repeat: no-repeat;background-attachment: fixed;">
+    <div class="box">
+        <div class="content">
+            <div class="content3">
+                <div class="login-wrapper">
+                    <h1 class="class=animate__animated animate__heartBeat">注册账号</h1>
+                    <!-- 错误信息显示区域 -->
+                    <div class="error-message" style="color: red;">
+                        {% if error_message %}
+                            {{ error_message }}
+                        {% endif %}
+                    </div>
+                    <div class="login-form">
+                        <form action="{% url 'zhuce' %}" method="post">
+                            {% csrf_token %}
+                            <div class="username form-item">
+                                <span style="float:left"><a>设置账号</a></span>
+                                <input type="text" class="input-item {% if username_error %}empty-field{% endif %}" name="username" style="height:50px;" value="{{ request.POST.username }}">
+                                <span style="float:left"><a>设置密码</a></span>
+                                <input type="password" class="input-item {% if password_error %}empty-field{% endif %}" name="password" style="height:50px;" value="{{ request.POST.password }}">
+                                <span style="float:left"><a>再次确认密码</a></span>
+                                <input type="password" class="input-item {% if confirm_password_error %}empty-field{% endif %}" name="confirm_password" style="height:50px;" value="{{ request.POST.confirm_password }}">
+                                <span style="float:left"><a>[提示]<br>1.账号必须为纯数字且长度不能小于5<br>2.密码必须包含至少一个字母和一个数字</a></span>
+                            </div>
+                            <button type="submit" class="login-btn" title="完成注册">完成注册</button>
+                        </form>
+                        <a href="{% url 'loginview' %}">
+                            <button class="login-btn" title="登录">返回登录</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

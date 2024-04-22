@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body background="../static/bg1.jpeg" style="background-size: 100% 100%;background-repeat: no-repeat;background-attachment: fixed;">
+    <div class="box">
+        <div class="content">
+            <div class="login-wrapper">
+                <h1 class="class=animate__animated animate__heartBeat">欢迎使用</h1>
+                <form action="{% url 'loginview' %}" method="post">
+                    {% csrf_token %}
+                    <div class="login-form">
+                        <div class="username form-item">
+                            <span style="float:left"><a>请输入账号</a></span>
+                            <span style="float:right"><a href="{% url 'zhuce' %}" style="color:rgb(100, 74, 10);text-decoration: none" title="注册账号">没有账号？点此注册</a></span>
+                            <input type="text" class="input-item" name="username" value="{{ username }}">
+                        </div>
+                        <div class="password form-item">
+                            <span style="float:left">请输入密码</span>
+                            <input type="password" class="input-item" name="password" value="{{ password }}">
+                        </div>
+                        {% if error_message %}
+                        <p style="color:red">{{ error_message }}</p>
+                        {% endif %}
+                        <button type="submit" class="login-btn" title="登录">登录</button>
+                    </div>
+                </form>
+                <div class="divider">
+                    <span class="line" style="margin-top: 20px;"></span>
+                    <span class="divider-text" style="margin-top: 20px;">其他方式登录</span>
+                    <span class="line" style="margin-top: 20px;"></span>
+                </div>
+                <div class="other-login-wrapper">
+                    <div class="other-login-item">
+                        <a href="https://im.qq.com/index/" title="QQ登录"><img src="../static/QQ.png" alt=""></a>
+                    </div>
+                    <div class="other-login-item">
+                        <a href="https://weixin.qq.com/" title="微信登录"><img src="../static/WeChat.png" alt=""></a>
+                    </div>
+                    <div class="other-login-item">
+                        <a href="https://mail.163.com/" title="网易邮箱登录"><img src="../static/wangyi.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

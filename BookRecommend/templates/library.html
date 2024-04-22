@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书推荐系统</title>
+    <link rel="stylesheet" href="../static/pic.css">
+    <link rel="stylesheet" href="../static/a2.css"/>
+    <style>
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        
+        .book-card {
+            width: 250px;
+            height: 450px;
+            border: 2px solid #ddd;
+            padding: 10px;
+            box-sizing: border-box;
+            margin: 10px;
+            text-align: center;  /* 居中文本和图片 */
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .book-card:hover{
+            border: 2px solid #30b44b;
+        }
+
+        .book-card img {
+            max-width: 100%;
+            height: auto;
+            display: block;  /* 避免下方间隙 */
+            margin: 0 auto;  /* 图片水平居中 */
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .pagination .current {
+            color: #fff;
+            background-color: #30b44b;
+            border: 1px solid #30b44b;
+            padding: 8px 16px;
+        }
+        form {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            width: 200px;  /* 调整输入框的宽度 */
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #30b44b;
+            color: #fff;
+            margin-right: 50px;
+            border: none;
+            cursor: pointer;
+        }
+
+        a.return-btn {
+            margin-left: 10px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ddd;
+            color: #333;
+        }
+    </style>
+</head>
+<body background="../static/bg3.jpg" style="background-size: 100% 100%;background-repeat: no-repeat;background-attachment: fixed;">
+    <div class="B1">
+        <div class="B4">
+            <a rel="nofollow" href="https://tianchi.aliyun.com/dataset/31828?spm=a2c22.12282016.0.0.3d6529feqm24qG" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 30px;">阿里云数据集</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.baidu.com/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">百度官网</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.csdn.net/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">CSDN官网</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.runoob.com/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">菜鸟教程</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.bookcrossing.com/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">BookCrossing</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://github.com/TaChangFeng" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">GitHub</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="{% url 'about' %}" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">网站说明</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="download.html" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">文件下载</a>
+            {% if user.is_authenticated %}
+            <a rel="nofollow" href="#" style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 50px;">[已登录用户]{{ user.username }}</a>
+            <a href="{% url 'logout' %}"  style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 30px;">退出账号</a>
+            {% else %}
+            <a rel="nofollow" href="{% url 'loginview' %}" style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 30px;">用户登录</a>
+            {% endif %}
+            
+        </div>
+    </div>
+    <div class="A2 A3">
+        <img src="../static/logo.png" style="height:60px;width:180px;margin-left:30px;margin-top:5px">
+    </div>
+    <div class="B6">
+        <a class="D1" href="{% url 'mainpage' %}" style="margin-left:170px">网站首页</a>
+        <a class="D1" href="{% url 'library' %}" style="background-color: #30b44b;color: #fff;border-radius: 5px;">图书馆</a>
+        {% if user.is_authenticated %}
+        <a class="D1" href="{% url 'history' %}">我的足迹</a>
+        {% else %}
+        <a class="D1" href="{% url 'loginview' %}" onclick="showLoginPrompt()">我的足迹</a>
+        <script>
+            function showLoginPrompt() {
+                alert("请登录后使用本功能！");
+            }
+        </script>
+        {% endif %}
+        <a class="D1" href="{% url 'about' %}" >网站说明</a>
+        <a class="D1" href="#" >下载专区</a>
+        <a class="D1" href="{% url 'admin:index' %}" >后台管理</a>
+        <div class="time"></div>
+        <script src="../static/time.js"></script>
+    </div>
+    <div style="margin-top: 150px;">
+            <form method="get" action="{% url 'search' %}" onsubmit="return checkSearch()">
+                <div style="margin-right: 800px;">
+                    <!-- 勾选框 -->
+                    <input type="checkbox" id="showAuthor" checked style="width:20px;height: 20px;">
+                    <label for="showAuthor" style="font-size: large;">显示作者</label>
+
+                    <input type="checkbox" id="showPublisher" checked style="width:20px;height: 20px;margin-left: 50px;">
+                    <label for="showPublisher" style="font-size: large;">显示出版社</label>
+                </div>
+                <input type="text" name="q" placeholder="搜索图书..." value="{{ query }}">
+                <button type="submit" style="font-size: 16px;">搜索</button>
+            </form>
+        {% if books %}
+        <div class="book-container">
+            {% for book in books %}
+            <a href="{% url 'record_and_show_book' bid=book.bid isbn=book.ISBN %}" style="text-decoration: none;color: black;">
+                <div class="book-card" style="background-color: white;">
+                    <img src="{{ book.Image_URL_M }}" alt="{{ book.Book_Title }}">
+                    <h3>{{ book.Book_Title }}</h3>
+                    <!-- 根据勾选状态显示或隐藏作者 -->
+                    {% if book.Book_Author %}
+                        <p class="author-paragraph">作者: {{ book.Book_Author }}</p>
+                    {% endif %}
+                    <!-- 根据勾选状态显示或隐藏出版社 -->
+                    {% if book.Publisher %}
+                        <p class="publisher-paragraph">出版社: {{ book.Publisher }}</p>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+            <div class="pagination" style="margin-bottom: 100px;">
+                <span class="step-links">
+                    {% if books.has_previous %}
+                        <a href="?page=1">&laquo; 第1页</a>
+                        <a href="?page={{ books.previous_page_number }}">上一页</a>
+                    {% endif %}
+    
+                    <span class="current">
+                        第 {{ books.number }} 页/共 {{ books.paginator.num_pages }} 页
+                    </span>
+    
+                    {% if books.has_next %}
+                        <a href="?page={{ books.next_page_number }}">下一页</a>
+                        <a href="?page={{ books.paginator.num_pages }}">最后一页 &raquo;</a>
+                    {% endif %}
+                    <!-- 添加跳转到指定页码的表单 -->
+                    <form method="get" style="display: inline-block; margin-left: 10px;">
+                        <label for="page_number">跳转到：</label>
+                        <input type="number" name="page" id="page_number" min="1" max="{{ books.paginator.num_pages }}" style="padding: 8px 16px;">
+                        <button type="submit">跳转</button>
+                    </form>
+                </span>
+                
+            </div>
+        {% else %}
+            <!-- 显示搜索结果为空的消息 -->
+            <div class="empty-result-message">搜索结果为空！</div>
+        {% endif %}
+    </div>
+
+    <script>
+        function checkSearch() {
+            var searchInput = document.getElementsByName("q")[0];
+            if (searchInput.value.trim() === "") {
+                alert("请输入搜索关键词！");
+                return false; // 阻止表单提交
+            }
+            return true; // 允许表单提交
+        }
+    </script>
+    <script>
+        // 获取勾选框和要显示/隐藏的信息
+        var showAuthorCheckbox = document.getElementById('showAuthor');
+        var showPublisherCheckbox = document.getElementById('showPublisher');
+    
+        // 添加事件监听器，当复选框状态变化时触发
+        showAuthorCheckbox.addEventListener('change', updateBookDisplay);
+        showPublisherCheckbox.addEventListener('change', updateBookDisplay);
+    
+        // 初始页面加载时更新显示
+        updateBookDisplay();
+    
+        function updateBookDisplay() {
+            // 获取所有书籍卡片
+            var bookCards = document.querySelectorAll('.book-card');
+    
+            // 遍历每个书籍卡片
+            bookCards.forEach(function(bookCard) {
+                // 获取作者和出版社信息的段落元素
+                var authorParagraph = bookCard.querySelector('.author-paragraph');
+                var publisherParagraph = bookCard.querySelector('.publisher-paragraph');
+    
+                // 根据勾选框状态显示或隐藏作者信息
+                if (authorParagraph) {
+                    authorParagraph.style.display = showAuthorCheckbox.checked ? 'block' : 'none';
+                }
+    
+                // 根据勾选框状态显示或隐藏出版社信息
+                if (publisherParagraph) {
+                    publisherParagraph.style.display = showPublisherCheckbox.checked ? 'block' : 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

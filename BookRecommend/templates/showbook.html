@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书推荐系统</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'pic.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'a2.css' %}">
+
+    <style>
+        .book-card {
+            width: 250px;
+            height: 450px;
+            border: 2px solid #ddd;
+            padding: 10px;
+            box-sizing: border-box;
+            margin: 10px;
+            text-align: center;  /* 居中文本和图片 */
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .book-card:hover{
+            border: 2px solid #30b44b;
+        }
+
+        .book-card img {
+            max-width: 100%;
+            height: auto;
+            display: block;  /* 避免下方间隙 */
+            margin: 0 auto;  /* 图片水平居中 */
+        }
+
+        /* 整体书籍详情容器 */
+        .book-details {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+    
+        /* 左侧大图片区域 */
+        .left-section img {
+            max-width: 100%; /* 图片宽度最大为父容器宽度 */
+            height: auto; /* 高度自适应 */
+        }
+    
+        /* 中间评分区域 */
+        .middle-section {
+            width: 60%; /* 可根据需要调整宽度比例 */
+            text-align: left;
+        }
+    
+        /* 右侧基本信息区域 */
+        .right-section {
+            width: 20%; /* 可根据需要调整宽度比例 */
+            padding: 0 20px;
+            text-align: center;
+        }
+    
+        /* 标题样式 */
+        .right-section h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    
+        /* 段落样式 */
+        .right-section p {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+    
+        button[type="submit"],
+        a.return-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-right: 50px;
+            background-color: #30b44b;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    
+        button.return-btn {
+            margin-left: auto; /* 将返回按钮推到最左侧 */
+        }
+    </style>
+</head>
+<body background="../static/bg3.jpg" style="background-size: 100% 100%;background-repeat: no-repeat;background-attachment: fixed;">
+    <div class="B1">
+        <div class="B4">
+            <a rel="nofollow" href="https://tianchi.aliyun.com/dataset/31828?spm=a2c22.12282016.0.0.3d6529feqm24qG" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 30px;">阿里云数据集</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.baidu.com/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">百度官网</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.csdn.net/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">CSDN官网</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.runoob.com/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">菜鸟教程</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://www.bookcrossing.com/" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">BookCrossing</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="https://github.com/TaChangFeng" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">GitHub</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="{% url 'about' %}" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">网站说明</a>
+            <span class="B5" style="float:left;margin-top: 10px;margin-left: 10px;" >|</span>
+            <a rel="nofollow" href="download.html" style="color:white;text-decoration: none;float:left;margin-top: 10px;margin-left: 10px;">文件下载</a>
+            {% if user.is_authenticated %}
+            <a rel="nofollow" href="#" style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 50px;">[已登录用户]{{ user.username }}</a>
+            <a href="{% url 'logout' %}"  style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 30px;">退出账号</a>
+            {% else %}
+            <a rel="nofollow" href="{% url 'loginview' %}" style="color:white;text-decoration: none;float:right;margin-top: 10px;margin-right: 30px;">用户登录</a>
+            {% endif %}
+            
+        </div>
+    </div>
+    <div class="A2 A3">
+        <img src="{% static 'logo.png' %}" style="height:60px;width:180px;margin-left:30px;margin-top:5px">
+    </div>
+    <div class="B6">
+        <a class="D1" href="{% url 'mainpage' %}" style="margin-left:170px">网站首页</a>
+        <a class="D1" href="{% url 'library' %}" style="background-color: #30b44b;color: #fff;border-radius: 5px;">图书馆</a>
+        {% if user.is_authenticated %}
+        <a class="D1" href="{% url 'history' %}">我的足迹</a>
+        {% else %}
+        <a class="D1" href="{% url 'loginview' %}" onclick="showLoginPrompt()">我的足迹</a>
+        <script>
+            function showLoginPrompt() {
+                alert("请登录后使用本功能！");
+            }
+        </script>
+        {% endif %}
+        <a class="D1" href="{% url 'about' %}" >网站说明</a>
+        <a class="D1" href="#" >下载专区</a>
+        <a class="D1" href="{% url 'admin:index' %}" >后台管理</a>
+        <div class="time"></div>
+        <script src="{% static 'time.js' %}"></script>
+    </div>
+    <div style="margin-top: 150px; margin-left: 100px;">
+        <a href="javascript:void(0);" class="return-btn" style="text-decoration: none; font-size: 16px;" onclick="goBack()">返回</a>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
+    <div class="book-details">
+        <!-- 左侧大图片区域 -->
+        <div class="left-section" style="margin-left: 100px;margin-top: 10px;">
+            <img src="{{ book.Image_URL_L }}" alt="{{ book.Book_Title }}">
+        </div>
+        <!-- 中间评分区域 -->
+        <div class="middle-section" style="margin-top: 10px;margin-left: 100px;">
+            <h1>{{ book.Book_Title }}</h1>
+            <hr>
+            <p style="margin-top: 50px;font-size: larger;">作者: {{ book.Book_Author }}</p>
+            <p style="margin-top: 20px;font-size: larger;">出版社: {{ book.Publisher }}</p>
+            <p style="margin-top: 20px;font-size: larger;">书籍ISBN号: {{ book.ISBN }}</p>
+            <p style="margin-top: 20px;font-size: larger;">书籍出版年份: {{ book.Year_Of_Publication }}</p>
+        </div>
+        <!-- 右侧基本信息区域 -->
+        <div class="right-section">
+            <h1 style="color: #30b44b;font-size: 3em;">{{ avg_rating|floatformat:"1" }}</h1>
+            <p>来自{{ num_ratings|default:"0" }}位用户的综合评分</p>
+            
+        </div>
+    </div>
+    <!-- 下方推荐图书区域 -->
+    <div class="recommended-books" style="margin-top: 50px; margin-left: 100px;">
+        <h2 style="text-align: center;">————————推荐图书————————</h2>
+        {% for recommended_book in recommended_books %}
+        <a href="{% url 'record_and_show_book' bid=recommended_book.bid isbn=recommended_book.ISBN %}" style="text-decoration: none;color: black;">
+            <div class="book-card" style="background-color: white; display: inline-block; margin-right: 10px; vertical-align: top;">
+                <img src="{{ recommended_book.Image_URL_M }}" alt="{{ recommended_book.Book_Title }}">
+                <h2>{{ recommended_book.Book_Title }}</h2>
+                <p>{{ recommended_book.Book_Author }}</p>
+                <p>{{ recommended_book.Publisher }}</p>
+            </div>
+        </a>   
+        {% endfor %}
+    </div>
+    
+    
+
+</body>
+</html>
